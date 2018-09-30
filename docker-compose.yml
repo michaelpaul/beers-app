@@ -1,0 +1,23 @@
+version: '2'
+services:
+  php:
+    image: dmstr/php-yii2:7.2-fpm-4.5-nginx
+    volumes:
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+      - ./:/app:delegated
+    ports:
+      - '8080:80'
+  db:
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "5306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: supersecret
+      MYSQL_DATABASE: beers
+      MYSQL_USER: app
+      MYSQL_PASSWORD: secret
+
+volumes:
+    db_data:
