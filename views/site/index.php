@@ -5,6 +5,7 @@
 use yii\helpers\Html;
 
 $this->title = Yii::$app->name;
+$this->params['breadcrumbs'] = [];
 ?>
 <div class="site-index">
     <div class="jumbotron">
