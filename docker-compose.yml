@@ -1,7 +1,9 @@
-version: '2'
+version: '3'
 services:
   php:
     image: dmstr/php-yii2:7.2-fpm-4.5-nginx
+    depends_on:
+      - db
     volumes:
       - ~/.composer-docker/cache:/root/.composer/cache:delegated
       - ./:/app:delegated

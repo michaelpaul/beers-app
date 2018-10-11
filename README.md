@@ -30,28 +30,18 @@ INSTALLATION
 
 ### Install with Docker
     
-Run the installation triggers (creating cookie validation code)
+To build and start the app
 
-    docker-compose run --rm php composer install    
+    make
     
-Start the container
+Wait until MySQL is ready for connections and then apply migrations
 
-    docker-compose up -d
-    
-Apply migrations
-
-    docker-compose run --rm php ./yii migrate --interactive=0
+    make migrate
     
 You can then access the application through the following URL:
 
     http://localhost:8080
     
-### Updating dependencies
-
-When you want to update your vendor packages
-
-    docker-compose run --rm php composer update --prefer-dist
-
 **NOTES:** 
 - Minimum required Docker engine version `17.04` for development (see [Performance tuning for volume mounts](https://docs.docker.com/docker-for-mac/osxfs-caching/))
 - The default configuration uses a host-volume in your home directory `.docker-composer` for composer caches
@@ -68,11 +58,11 @@ By default there are 3 test suites:
 
 Apply migrations into tests database
     
-    docker-compose run --rm php ./tests/bin/yii migrate --interactive=0
+    make migrate
 
 Tests can be executed by running
 
-    docker-compose run --rm php codecept run
+    make test
 
 The command above will execute unit and functional tests. Unit tests are testing the system components, while functional
 tests are for testing user interaction. Acceptance tests are disabled by default as they require additional setup since
@@ -91,7 +81,7 @@ To execute acceptance tests do the following:
 3. Update dependencies with Composer 
 
     ```
-    composer update  
+    make update  
     ```
 
 4. Download [Selenium Server](http://www.seleniumhq.org/download/) and launch it:
@@ -116,22 +106,13 @@ To execute acceptance tests do the following:
     docker run --net=host selenium/standalone-firefox:2.53.0
     ```
 
-5. (Optional) Create `yii2_basic_tests` database and update it by applying migrations if you have them.
-
-   ```
-   tests/bin/yii migrate
-   ```
-
-   The database configuration can be found at `config/test_db.php`.
-
-
-6. Start web server:
+5. Start web server:
 
     ```
     tests/bin/yii serve
     ```
 
-7. Now you can run all available tests
+6. Now you can run all available tests
 
    ```
    # run all available tests
