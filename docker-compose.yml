@@ -1,7 +1,7 @@
 version: '3'
 services:
   php:
-    image: dmstr/php-yii2:7.2-fpm-4.5-nginx
+    image: dmstr/php-yii2:7.1-fpm-3.2-nginx
     depends_on:
       - db
     volumes:
