@@ -1,6 +1,8 @@
 # The Random Beer App
 
-This is a small [Yii 2](http://www.yiiframework.com/) application with a RESTFul API.
+[![Build Status](https://travis-ci.com/michaelpaul/beers-app.svg?branch=master)](https://travis-ci.com/michaelpaul/beers-app)
+
+This is a stupid [Yii 2](http://www.yiiframework.com/) application with a RESTFul API.
 
 DIRECTORY STRUCTURE
 -------------------
@@ -22,7 +24,7 @@ DIRECTORY STRUCTURE
 REQUIREMENTS
 ------------
 
-The minimum requirement by this project template that your Web server supports PHP 5.4.0.
+The minimum requirement by this project template that your Web server supports PHP 7.1.0.
 
 
 INSTALLATION
@@ -30,21 +32,37 @@ INSTALLATION
 
 ### Install with Docker
     
-To build and start the app
+Start the stack
 
-    make
+```
+docker-compose up -d
+```
     
+Shell into the PHP container
+
+```
+docker-compose exec php bash
+```
+
+Install composer packages
+
+```
+composer install
+```
+
 Wait until MySQL is ready for connections and then apply migrations
 
-    make migrate
+```
+composer migrate
+```
     
-You can then access the application through the following URL:
+You can access the application through the following URL:
 
     http://localhost:8080
     
 **NOTES:** 
 - Minimum required Docker engine version `17.04` for development (see [Performance tuning for volume mounts](https://docs.docker.com/docker-for-mac/osxfs-caching/))
-- The default configuration uses a host-volume in your home directory `.docker-composer` for composer caches
+- The default configuration uses a host-volume in your home directory `.composer-docker` for composer caches
 
 TESTING
 -------
@@ -56,13 +74,9 @@ By default there are 3 test suites:
 - `functional`
 - `acceptance`
 
-Apply migrations into tests database
-    
-    make migrate
+Tests can be executed inside the container by running 
 
-Tests can be executed by running
-
-    make test
+    composer test
 
 The command above will execute unit and functional tests. Unit tests are testing the system components, while functional
 tests are for testing user interaction. Acceptance tests are disabled by default as they require additional setup since
@@ -78,13 +92,7 @@ To execute acceptance tests do the following:
 2. Replace `codeception/base` package in `composer.json` with `codeception/codeception` to install full featured
    version of Codeception
 
-3. Update dependencies with Composer 
-
-    ```
-    make update  
-    ```
-
-4. Download [Selenium Server](http://www.seleniumhq.org/download/) and launch it:
+3. Download [Selenium Server](http://www.seleniumhq.org/download/) and launch it:
 
     ```
     java -jar ~/selenium-server-standalone-x.xx.x.jar
@@ -106,13 +114,13 @@ To execute acceptance tests do the following:
     docker run --net=host selenium/standalone-firefox:2.53.0
     ```
 
-5. Start web server:
+4. Start web server:
 
     ```
     tests/bin/yii serve
     ```
 
-6. Now you can run all available tests
+5. Now you can run all available tests
 
    ```
    # run all available tests

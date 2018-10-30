@@ -41,7 +41,23 @@
         "post-create-project-cmd": [
             "yii\\composer\\Installer::postCreateProject",
             "yii\\composer\\Installer::postInstall"
-        ]
+        ],
+        "clean": [
+            "codecept clean",
+            "yii cache/flush-schema --interactive=0",
+            "yii cache/flush-all --interactive=0",
+            "find runtime -mindepth 1 -not -name .gitignore -delete"
+        ],
+        "migrate": [
+            "./yii migrate --interactive=0",
+            "./tests/bin/yii migrate --interactive=0"
+        ],
+        "test": "codecept run"
+    },
+    "scripts-descriptions": {
+        "clean": "Clear cache and generated stuff.",
+        "migrate": "Apply database migrations.",
+        "test": "Run app tests."
     },
     "extra": {
         "yii\\composer\\Installer::postCreateProject": {

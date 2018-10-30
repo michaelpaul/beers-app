@@ -12,6 +12,6 @@ before_install:
   - mysql -u root -e "FLUSH PRIVILEGES"
   - mysql -u root -e 'CREATE DATABASE `beers_tests`'
 install: 
-  - composer install --prefer-dist
+  - composer install --prefer-dist --optimize-autoloader
   - tests/bin/yii migrate --interactive=0
-script: vendor/bin/codecept run
+script: composer test
