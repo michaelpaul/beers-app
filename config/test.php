@@ -23,7 +23,10 @@ return [
             'basePath' => __DIR__ . '/../web/assets',
         ],
         'urlManager' => [
-            'showScriptName' => true,
+            'showScriptName' => false,
+            'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
+            'rules' => require 'urls.php',
         ],
         'user' => [
             'identityClass' => 'app\models\User',

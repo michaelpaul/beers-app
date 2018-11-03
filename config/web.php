@@ -48,26 +48,10 @@ $config = [
         ],
         'db' => $db,
         'urlManager' => [
-            'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'enablePrettyUrl' => true,
             'enableStrictParsing' => true,
-            'rules' => [
-                // API
-                [
-                    'class' => 'yii\rest\UrlRule',
-                    'controller' => 'beer',
-                    'prefix' => 'api',
-                    'extraPatterns' => [
-                        'GET random' => 'random',
-                    ],
-                ],
-                // Web
-                'GET /' => 'site/index',
-                'GET /about' => 'site/about',
-                'GET /contact' => 'site/contact',
-                'GET,POST /site/login' => 'site/login',
-                'POST /site/logout' => 'site/logout',
-            ],
+            'rules' => require 'urls.php',
         ]
     ],
     'params' => $params,
