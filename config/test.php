@@ -25,7 +25,6 @@ return [
         'urlManager' => [
             'showScriptName' => false,
             'enablePrettyUrl' => true,
-            'enableStrictParsing' => true,
             'rules' => require 'urls.php',
         ],
         'user' => [

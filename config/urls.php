@@ -11,10 +11,6 @@ return [
         ],
     ],
     // Web
-    '/' => 'site/index',
-    '/about' => 'site/about',
-    '/contact' => 'site/contact',
-    '/captcha' => 'site/captcha',
-    '/login' => 'site/login',
-    '/logout' => 'site/logout',
+    '/sobre' => 'site/about',
+    '/contato' => 'site/contact',
 ];
