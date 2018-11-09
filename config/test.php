@@ -33,6 +33,9 @@ return [
         'request' => [
             'cookieValidationKey' => 'test',
             'enableCsrfValidation' => false,
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
             // but if you absolutely need it set cookie domain to localhost
             /*
             'csrfCookie' => [

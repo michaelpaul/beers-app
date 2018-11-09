@@ -2,8 +2,10 @@ actor: ApiTester
 modules:
     enabled:
         - REST:
-            depends: Yii2
             url: /api
+            depends: Yii2
+        - Yii2:
+            part: [fixtures, orm]
         - \Helper\Api
     config:
         - Yii2

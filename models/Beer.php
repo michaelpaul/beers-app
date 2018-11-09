@@ -31,7 +31,7 @@ class Beer extends \yii\db\ActiveRecord
         return [
             [['name', 'abv'], 'required'],
             [['description', 'brewery_location'], 'string'],
-            [['abv'], 'number'],
+            [['abv'], 'string'],
             [['name'], 'string', 'max' => 255],
         ];
     }
@@ -61,7 +61,7 @@ class Beer extends \yii\db\ActiveRecord
 
     public function getAbvText()
     {
-        return Yii::$app->formatter->asPercent($this->abv / 100, 1);
+        return $this->abv . '%';
     }
 
     public function getBreweryLocationText()
