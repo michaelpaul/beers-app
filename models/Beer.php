@@ -31,7 +31,7 @@ class Beer extends \yii\db\ActiveRecord
         return [
             [['name', 'abv'], 'required'],
             [['description', 'brewery_location'], 'string'],
-            [['abv'], 'string'],
+            [['abv'], 'number'],
             [['name'], 'string', 'max' => 255],
         ];
     }

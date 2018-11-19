@@ -18,6 +18,17 @@ class BeerCest
         $I->dontSeeHttpHeader('Set-Cookie');
     }
 
+    public function createBeerWithWrongForm(ApiTester $I)
+    {
+        $I->sendPOST('/beers', ['foo' => 'bar']);
+        $I->seeResponseCodeIs(422);
+        $I->seeResponseIsJson();
+        $I->seeResponseContainsJson([
+            ['field' => 'name', 'message' => 'Name cannot be blank.'],
+            ['field' => 'abv', 'message' => 'Abv cannot be blank.']
+        ]);
+    }
+
     public function createBeer(ApiTester $I)
     {
         $I->sendPOST('/beers', [
@@ -92,6 +103,20 @@ class BeerCest
         ]);
     }
 
+    public function notFound(ApiTester $I)
+    {
+        $I->sendGET('/beers/777');
+        $I->seeResponseCodeIs(404);
+        $I->seeResponseIsJson();
+        $I->seeResponseContainsJson([
+            'name' => 'Not Found',
+            'message' => 'Object not found: 777',
+            'code' => 0,
+            'status' => 404,
+            'type' => 'yii\web\NotFoundHttpException',
+        ]);
+    }
+
     public function getBeer(ApiTester $I)
     {
         $I->sendGET('/beers/2');
@@ -102,6 +127,59 @@ class BeerCest
             'name' => 'Smithwick’s Irish Ale',
             'abv' => '4.50%',
             'brewery_location' => 'Ireland, Kilkenny'
+        ]);
+    }
+
+    public function updateBeerWithWrongForm(ApiTester $I)
+    {
+        $I->sendPUT('/beers/2', [
+            'abv' => '450 percent',
+        ]);
+        $I->seeResponseCodeIs(422);
+        $I->seeResponseIsJson();
+        $I->seeResponseContainsJson([
+            ['field' => 'abv', 'message' => 'Abv must be a number.']
+        ]);
+    }
+
+    public function updateBeerWithPut(ApiTester $I)
+    {
+        $I->sendPUT('/beers/2', [
+            'id' => 2,
+            'name' => 'Smithwick’s Irish Red Ale',
+            'description' => 'Short and sweet'
+        ]);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+        $I->seeResponseContainsJson([
+            // changed
+            'name' => 'Smithwick’s Irish Red Ale',
+            'description' => 'Short and sweet',
+            // no changes
+            'id' => 2,
+            'abv' => '4.50%',
+            'brewery_location' => 'Ireland, Kilkenny'
+        ]);
+    }
+
+    public function updateBeerWithPatch(ApiTester $I)
+    {
+        $I->sendPATCH('/beers/2', [
+            'id' => 2,
+            'name' => 'The same as PUT',
+            'description' => 'PUT and PATCH use the same controller/action',
+            'abv' => '3.01',
+        ]);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+        $I->seeResponseContainsJson([
+            // changed
+            'name' => 'The same as PUT',
+            'description' => 'PUT and PATCH use the same controller/action',
+            'abv' => '3.01%',
+            // no changes
+            'id' => 2,
+            'brewery_location' => 'Ireland, Kilkenny',
         ]);
     }
 }
