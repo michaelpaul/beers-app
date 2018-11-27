@@ -182,4 +182,35 @@ class BeerCest
             'brewery_location' => 'Ireland, Kilkenny',
         ]);
     }
+
+    public function deleteNotFound(ApiTester $I)
+    {
+        $I->sendDELETE('/beers/999');
+        $I->seeResponseCodeIs(404);
+        $I->seeResponseIsJson();
+        $I->seeResponseContainsJson([
+            'name' => 'Not Found'
+        ]);
+    }
+
+    public function delete(ApiTester $I)
+    {
+        $I->sendDELETE('/beers/3');
+        $I->seeResponseCodeIs(204);
+        $I->seeResponseEquals('');
+    }
+
+    public function itemOptions(ApiTester $I)
+    {
+        $I->sendOPTIONS('/beers/1');
+        $I->seeResponseEquals('');
+        $I->seeHttpHeader('Allow', 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS');
+    }
+
+    public function collectionOptions(ApiTester $I)
+    {
+        $I->sendOPTIONS('/beers/1');
+        $I->seeResponseEquals('');
+        $I->seeHttpHeader('Allow', 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS');
+    }
 }

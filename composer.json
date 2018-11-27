@@ -52,12 +52,14 @@
             "./yii migrate --interactive=0",
             "./tests/bin/yii migrate --interactive=0"
         ],
-        "test": "codecept run"
+        "test": "codecept run",
+        "coverage": "codecept run --coverage --coverage-xml --coverage-html"
     },
     "scripts-descriptions": {
         "clean": "Clear cache and generated stuff.",
         "migrate": "Apply database migrations.",
-        "test": "Run app tests."
+        "test": "Run app tests.",
+        "coverage": "Run app tests and generate coverage reports."
     },
     "extra": {
         "yii\\composer\\Installer::postCreateProject": {
